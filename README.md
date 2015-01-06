@@ -1,4 +1,6 @@
-erd-designer
+Django Rapid App Designer
 ============
 
-Javascript application for creating ER diagrams, and generating DDL SQL scripts for different DBMS's
+Javascript application for creating ER diagrams, and generating Django Apps.
+
+Based on https://github.com/ssuljic/erd-designer
