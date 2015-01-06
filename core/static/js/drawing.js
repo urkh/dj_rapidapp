@@ -14,15 +14,12 @@ $(function() {
 
 		$("#edit_form").empty();
 		$("#table_name").val("");
-		$("#toolbox").accordion({active: false});
+		//$("#toolbox").accordion({active: false});
 
 	});	
 
-	$(".genscript").click(function() {
-		content = DB.toSQL($(this).attr('id'));
-		$("#modal-content textarea").html(content);
-		$("#myModalLabel").text($(this).attr('id').toUpperCase());
-		$('#myModal').modal();
+	$("#rapapp").click(function() {
+		content = DB.toSQL();
 	});
 
 });

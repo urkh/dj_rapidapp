@@ -1,4 +1,22 @@
 // Global object for keeping information from the ERD
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
 var DB = {};
 
 DB.database = {
@@ -16,7 +34,7 @@ DB.createTable = function(name) {
 	table.refs = [];
 	table.attributes = [{ 
 		"name": "id", 
-		"type":"Numeric", 
+		"type":"AutoField", 
 		"size": 11, 
 		"constraints": ["PRIMARY KEY"],
 	}];
@@ -146,11 +164,36 @@ DB.redrawLines = function() {
 	$("#svgarea").css("width", max_left + 'px');
 }
 
-DB.toSQL = function (dbms) {
+DB.toSQL = function () {
+
+
+	var modelo = JSON.stringify(DB.database);
+
+	$.ajax({
+		url: '/designer/create/',
+		type: 'POST',
+		data: modelo,
+		contentType: 'application/json',
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("X-CSRFToken",getCookie('csrftoken'));
+		}
+		/*beforeSend: function(xhr) {
+			xhr.setRequestHeader("X-CSRFToken",getCookie('csrftoken'));
+		}*/
+	});
+	
+	alert("Se crearan modelos de: "+modelo); // nombre_tablas
+
+	/*
+
 	var script = '';
 	fk_constraints = '';
 	var bad_indentation = ''
+
 	for(var i=0; i<DB.database.tables.length; i++) {
+		var nombre_tabla = DB.database.tables[i].name;
+
+		
 		if(dbms === 'mysql') {
 			script += 'DROP TABLE IF EXISTS `' + DB.database.tables[i].name + '`;\n\n';
 		}
@@ -196,5 +239,5 @@ DB.toSQL = function (dbms) {
 	script += fk_constraints;
 	if(dbms === 'postgresql') 
 		script = script.replace(/`/g, '"');
-	return script;
+	return script; */
 }
