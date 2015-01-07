@@ -104,14 +104,21 @@ DB.redraw = function() {
 		var table_id = $('.active_table').find('.table_id').val();
 		$("#add_attribute_btn").on("click", function() {
 			var attr = {};
-			attr.name = $('#attr_name').val();
+			
 			attr.type = $('.type option:selected').text();
 			attr.size = $('.size').val();
 			var constr = [];
 			var ref = null;
 			$('.attribute_constraints input:checked').each(function () {
-				if($(this).val() == 'FOREIGN KEY')
+				if($(this).val() == 'FOREIGN KEY'){
 					ref = $('.fk_ref option:selected').val();
+					oref = ref - 1;
+					attr.name = DB.database.tables[oref].name
+				}else{
+					attr.name = $('#attr_name').val();
+
+
+				}
 				constr.push($(this).val());
 			});
 			attr.constraints = constr;			

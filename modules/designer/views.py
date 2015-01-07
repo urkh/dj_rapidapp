@@ -54,6 +54,17 @@ def val_attrs(attr):
         attributes += size
         attributes += ')'
 
+
+    elif attr['type'] == 'ForeignKey':
+
+        #import ipdb; ipdb.set_trace()
+        attributes = attr['type'] + '('
+        attributes += to_camelc(attr['name']) + ', '
+        attributes += cons_blank + ', '
+        attributes += cons_null + ', '
+        attributes += 'verbose_name="' + attr['name'] + '", '
+        attributes += ')'
+
     return attributes
 
 
