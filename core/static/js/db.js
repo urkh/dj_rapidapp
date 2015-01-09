@@ -24,11 +24,13 @@ DB.database = {
 	"tables": []
 };
 
-DB.createTable = function(name) {
+DB.createTable = function(name, app_name) {
 	var table = {};
 	table.id = DB.database.tables.length === 0 ? 1 : DB.database.tables[DB.database.tables.length - 1].id + 1
 	table.name = name;
+	table.app_name = app_name;
 	// css positions
+
 	table.top = "auto";
 	table.left = "auto";
 	table.refs = [];
@@ -73,7 +75,7 @@ DB.redraw = function() {
 	for(var i=0; i<DB.database.tables.length; i++) {
 
 		var table = "<div id='table_" + DB.database.tables[i].id +"' class='draggable panel panel-info' style='left:" + DB.database.tables[i].left + ";top:" + DB.database.tables[i].top + "'>";
-		table += "<div class='panel-heading'><h3 class='panel-title'>" + DB.database.tables[i].name + "</h3></div>";
+		table += "<div class='panel-heading'><h3 class='panel-title'>" + DB.database.tables[i].name + "</h3>("+DB.database.tables[i].app_name+")</div>";
 		// table id
 		table += "<input type='hidden' value='" + DB.database.tables[i].id + "' class='table_id' />"
 		table += "<table class='table'>";
@@ -104,7 +106,7 @@ DB.redraw = function() {
 		var table_id = $('.active_table').find('.table_id').val();
 		$("#add_attribute_btn").on("click", function() {
 			var attr = {};
-			
+			attr.name = $('#attr_name').val();
 			attr.type = $('.type option:selected').text();
 			attr.size = $('.size').val();
 			var constr = [];
@@ -114,10 +116,6 @@ DB.redraw = function() {
 					ref = $('.fk_ref option:selected').val();
 					oref = ref - 1;
 					attr.name = DB.database.tables[oref].name
-				}else{
-					attr.name = $('#attr_name').val();
-
-
 				}
 				constr.push($(this).val());
 			});
