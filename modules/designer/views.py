@@ -5,6 +5,7 @@ import re
 import json
 import shutil
 from modules.designer.build_project import set_settings, set_urls, set_wsgi, set_manage
+from django.views.decorators.csrf import csrf_exempt
 
 
 def make_projects(data):
@@ -162,6 +163,8 @@ def set_attrs(attr):
     return attributes
 
 
+
+@csrf_exempt
 def designer_create(request):
     data = json.loads(request.body)
 

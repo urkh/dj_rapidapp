@@ -102,9 +102,10 @@ def set_middlewares():
 def set_database(dbms):
 
     db = "\n\nDATABASES = {"
-    db += "\n'default': {"
-    db += "\n    'ENGINE': 'django.db.backends.sqlite3',"
-    db += "\n    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),"
+    db += "\n    'default': {"
+    db += "\n        'ENGINE': 'django.db.backends.sqlite3',"
+    db += "\n        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),"
+    db += "\n    }"
     db += "\n}"
 
     return db
